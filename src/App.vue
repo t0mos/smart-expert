@@ -14,13 +14,6 @@
   </div>
 </template>
 
-<!-- 
-  todo:
-    1. add triangle to tooltip
-    2. add animation???
-    3. optimize css files
--->
-
 <script>
 import { computed } from 'vue'
 import Tabs from './components/Tabs.vue'
