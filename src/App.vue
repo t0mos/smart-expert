@@ -1,32 +1,111 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <section class="wrapper">
+      <h1>Test task</h1>
+      <div class="container">
+        <div class="container__head">
+          <Tabs :links="links" />
+        </div>
+        <div class="container__body">
+          <router-view></router-view>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
+<!-- 
+  todo:
+    1. add triangle to tooltip
+    2. add animation???
+    3. optimize css files
+-->
+
+<script>
+import { computed } from 'vue'
+import Tabs from './components/Tabs.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Tabs
+  },
+  data() {
+    return {
+      users: [],
+      links: [
+        {
+          name: 'Component: BaseSelect',
+          path: '/',
+        },
+        {
+          name: 'Component: BaseTooltip',
+          path: '/tooltip',
+        },
+      ],
+    }
+  },
+  provide() {
+    return {
+      users: computed(() => this.users),
+      buttons: [
+        {
+          buttonText: 'Top',
+          tooltipText: 'Top tooltip text',
+        },
+        {
+          buttonText: 'Right',
+          tooltipText: 'Right tooltip text',
+        },
+        {
+          buttonText: 'Bottom',
+          tooltipText: 'Bottom tooltip text',
+        },
+        {
+          buttonText: 'Left',
+          tooltipText: 'Left tooltip text',
+        }
+      ]
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    async loadData() {
+      const url = "https://60de1565878c890017fa2d5f.mockapi.io/api/v1/users"
+      const res = await fetch(url)
+      const finalRes = await res.json()
+      this.users = finalRes
+    }
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import './assets/styles/main.scss';
+
+.wrapper {
+  max-width: 1080px;
+  margin: 50px auto;
+  padding: 0 20px;
+  h1 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+  }
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+.container {
+  padding: 32px 43px;
+  min-height: 300px;
+  box-shadow: 0px 2px 6px rgba(0, 44, 92, 0.1);
+  @media screen and (max-width: 425px) {
+    padding: 20px;
+  }
+  &__head {
+    margin-bottom: 60px;
   }
 }
 </style>
