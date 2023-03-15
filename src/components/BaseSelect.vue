@@ -25,22 +25,31 @@
 </template>
 
 <script>
+import { ref, inject } from 'vue';
+
 export default {
   name: 'BaseSelect',
-  data() {
-    return {
-      showList: false,
-      selectedOption: 'Select',
+  setup() {
+    const showList = ref(false);
+    const selectedOption = ref('Select');
+
+    function selectItem(name) {
+      selectedOption.value = name
+      showList.value = false
     }
-  },
-  inject: ['users'],
-  methods: {
-    selectItem(name) {
-      this.selectedOption = name
-      this.showList = false
-    },
-    toggleSelect() {
-      this.showList = !this.showList
+
+    function toggleSelect() {
+      showList.value = !showList.value
+    }
+
+    const users = inject('users')
+
+    return {
+      showList,
+      selectedOption,
+      selectItem,
+      toggleSelect,
+      users
     }
   }
 }
