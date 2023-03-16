@@ -30,15 +30,15 @@ import { ref, inject } from 'vue';
 export default {
   name: 'BaseSelect',
   setup() {
-    const showList = ref(false);
-    const selectedOption = ref('Select');
+    const showList = ref(false)
+    const selectedOption = ref('Select')
 
-    function selectItem(name) {
+    const selectItem = (name) => {
       selectedOption.value = name
       showList.value = false
     }
 
-    function toggleSelect() {
+    const toggleSelect = () => {
       showList.value = !showList.value
     }
 
